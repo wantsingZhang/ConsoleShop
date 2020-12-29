@@ -9,35 +9,39 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class ReadProductExcel {
-    public User[] readExcel(InputStream in) {
-        User users[] = null;
+    public Product getProductById(String id, InputStream in) {
+        Product products[] = null;
         try {
             XSSFWorkbook xw = new XSSFWorkbook(in);
             XSSFSheet xs = xw.getSheetAt(0);
-            users = new User[xs.getLastRowNum()];
+            products = new Product[xs.getLastRowNum()];
             for (int j = 1; j <= xs.getLastRowNum(); j++) {
                 XSSFRow row = xs.getRow(j);
-                User user = new User();//每循环一次就把电子表格的一行的数据给对象赋值
+                Product product = new Product();//每循环一次就把电子表格的一行的数据给对象赋值
                 for (int k = 0; k <= row.getLastCellNum(); k++) {
                     XSSFCell cell = row.getCell(k);
                     if (cell == null)
                         continue;
                     if (k == 0) {
-                        user.setUsername(this.getValue(cell));//给username属性赋值
+                       product.setpID (this.getValue(cell));//给username属性赋值
                     } else if (k == 1) {
-                        user.setPassword(this.getValue(cell));//给password属性赋值
+                        product.setpName(this.getValue(cell));//给password属性赋值
                     } else if (k == 2) {
-                        user.setAddress(this.getValue(cell));//给address属性赋值
+                        product.setPrice(this.getValue(cell));//给address属性赋值
                     } else if (k == 3) {
-                        user.setPhone(this.getValue(cell));//给phone属性赋值
+                        product.setpDesc(this.getValue(cell));//给phone属性赋值
                     }
                 }
-                users[j-1] = user;
+                if (id.equals(product.getpID())){
+                    return product;
+                }
+
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return users;
+        return null;
     }
 
     private String getValue(XSSFCell cell) {
