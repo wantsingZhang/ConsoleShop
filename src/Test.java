@@ -25,6 +25,7 @@ public class Test {
                     bo = false;
                     ReadProductExcel readProductExcel = new ReadProductExcel();
                     Product products[] = readProductExcel.getAllProduct(inPro);
+                    System.out.println("商品ID\t\t\t商品名称\t\t\t\t商品价格\t\t\t\t商品描述");
                     for (Product product : products) {
                         System.out.print(product.getpID());
                         System.out.print("\t" + product.getpName());
