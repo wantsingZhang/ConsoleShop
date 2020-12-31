@@ -36,9 +36,11 @@ public class Test {
                     }
                     while (no) {               //如果商品id错误，重新输入
                         int count = 0;
-                        Product productes[] = new Product[4];
+
+                        Product productes[] = new Product[8];
                         System.out.println("请输入商品Id，将其加入购物车");
                         String pId = sc.next();
+
                         ReadProductExcel readProductExcel1 = new ReadProductExcel();
                         inPro = null;
                         inPro = Class.forName("Test").getResourceAsStream("/product.xlsx");
@@ -46,7 +48,37 @@ public class Test {
                         if (product != null) {
                             productes[count++] = product;
                             System.out.println("加入购物车成功！");
-                            no=false;
+                            System.out.println("是否继续购物？0不继续，1继续，2查看购物车");
+                            int xz=sc.nextInt();
+                            if (xz ==0) {
+                                no = false;
+                                System.out.println("感谢您的使用！");
+                            }else if(xz==1){
+                                no =true;
+
+                            }else if (xz==2){
+                                no =false;
+                                System.out.println("当前购物车商品如下");//".sout"自动打印
+                                for (Product product1 : productes) {
+                                    if (product1!=null)
+                                        System.out.print(product.getpID());
+                                    System.out.print("\t" + product.getpName());
+                                    System.out.print("\t" + product.getPrice());
+                                    System.out.println("\t" + product.getpDesc());
+                                    System.out.println("是否继续购物？购物选1，不购物选0");
+                                    int xuanz=sc.nextInt();
+                                    if (xuanz==0){
+                                       no= false;
+                                        System.out.println("感谢您的使用！");
+                                        break;
+                                    }else {
+
+                                        no=true;
+                                        break;
+                                    }
+                                }
+
+                            }
                         } else {
                             System.out.println("加入购物车失败，请检查商品ID！");
                         }
